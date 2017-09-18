@@ -32,6 +32,9 @@
 .katex-block {
   padding: 6px 15px;
   color: black;
+}
+
+span.katex-display {
   text-align: left;
 }
 
