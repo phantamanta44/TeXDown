@@ -31,10 +31,8 @@
 
 .katex-block {
   padding: 6px 15px;
-}
-
-.katex-block {
   color: black;
+  text-align: left;
 }
 
 html, body {
