@@ -1,18 +1,17 @@
 const renderer = new marked.Renderer();
+const katexOpts = {
+  throwOnError: false,
+  errorColor: '#F44336',
+};
 renderer.code = function(code) {
-  try {
-    return '<blockquote class="katex-block">' +
-      katex.renderToString(code) + '</blockquote>';
-  } catch (e) {
-    return `<div class="katex-error-block">${e.message}</div>`;
-  }
+  const r = katex.renderToString(code, {
+    displayMode: true,
+    ...katexOpts,
+  });
+  return `<blockquote class="katex-block">${r}</blockquote>`;
 };
 renderer.codespan = function(code) {
-  try {
-    return katex.renderToString(code);
-  } catch (e) {
-    return `<span class="katex-error">${e.message}</div>`;
-  }
+  return katex.renderToString(code, katexOpts);
 };
 
 const wrapper = document.getElementById('page-wrapper');

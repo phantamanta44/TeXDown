@@ -29,13 +29,7 @@
   border-left: none;
 }
 
-.katex-error, .katex-error-block {
-  color: #F44336;
-  background-color: #EFEFEF;
-  font-family: monospace;
-}
-
-.katex-block, .katex-error-block {
+.katex-block {
   padding: 6px 15px;
 }
 
