@@ -18,6 +18,7 @@ const preview = document.getElementById('preview');
 
 const editor = ace.edit('editor');
 editor.getSession().setUseSoftTabs(true);
+editor.getSession().setUseWrapMode(true);
 
 function updateOutput() {
   const result = marked(editor.getValue(), {
