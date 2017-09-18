@@ -24,6 +24,7 @@ editor.getSession().setUseWrapMode(true);
 function updateOutput() {
   const result = marked(editor.getValue(), {
     renderer: renderer,
+    smartypants: true,
   });
   preview.innerHTML = result;
 }
