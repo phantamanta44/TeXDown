@@ -15,10 +15,18 @@
   overflow: scroll;
 }
 
+#page-wrapper.printable > #editor {
+  display: none;
+}
+
 #preview {
   font: 15px 'Roboto',helvetica,arial,freesans,clean,sans-serif;
   padding: 0 1.3em;
   border-left: solid 3px #d1d1d1;
+}
+
+#page-wrapper.printable > #preview {
+  border-left: none;
 }
 
 .katex-error, .katex-error-block {

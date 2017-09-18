@@ -1,7 +1,8 @@
 const renderer = new marked.Renderer();
 renderer.code = function(code) {
   try {
-    return `<blockquote class="katex-block">${katex.renderToString(code)}</blockquote>`;
+    return '<blockquote class="katex-block">' +
+      katex.renderToString(code) + '</blockquote>';
   } catch (e) {
     return `<div class="katex-error-block">${e.message}</div>`;
   }
@@ -14,6 +15,7 @@ renderer.codespan = function(code) {
   }
 };
 
+const wrapper = document.getElementById('page-wrapper');
 const preview = document.getElementById('preview');
 
 const editor = ace.edit('editor');
@@ -28,3 +30,10 @@ function updateOutput() {
 }
 
 editor.getSession().on('change', updateOutput);
+document.onkeydown = function(event) {
+  if (event.keyCode === 77 && event.ctrlKey) {
+    wrapper.classList.toggle('printable');
+    event.preventDefault();
+    return false;
+  }
+};
