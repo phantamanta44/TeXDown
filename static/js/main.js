@@ -4,14 +4,22 @@ const katexOpts = {
   errorColor: '#F44336',
 };
 renderer.code = function(code) {
-  const r = katex.renderToString(code, {
-    displayMode: true,
-    ...katexOpts,
-  });
-  return `<blockquote class="katex-block">${r}</blockquote>`;
+  try {
+    const r = katex.renderToString(code, {
+      displayMode: true,
+      ...katexOpts,
+    });
+    return `<blockquote class="katex-block">${r}</blockquote>`;
+  } catch (e) {
+    return `<blockquote class="katex-block">${e.message}</blockquote>`;
+  }
 };
 renderer.codespan = function(code) {
-  return katex.renderToString(code, katexOpts);
+  try {
+    return katex.renderToString(code, katexOpts);
+  } catch (e) {
+    return e.message;
+  }
 };
 
 const wrapper = document.getElementById('page-wrapper');
