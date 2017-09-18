@@ -19,6 +19,7 @@ const preview = document.getElementById('preview');
 
 const editor = ace.edit('editor');
 editor.getSession().setUseSoftTabs(true);
+editor.getSession().setTabSize(2);
 editor.getSession().setUseWrapMode(true);
 
 function updateOutput() {
