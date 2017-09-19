@@ -43,6 +43,7 @@ editor.getSession().on('change', updateOutput);
 document.onkeydown = function(event) {
   if (event.keyCode === 77 && event.ctrlKey) {
     wrapper.classList.toggle('printable');
+    document.body.classList.toggle('printable');
     event.preventDefault();
     return false;
   }

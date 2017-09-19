@@ -8,6 +8,10 @@ body {
   overflow: hidden;
 }
 
+body.printable {
+  overflow: visible;
+}
+
 #page-wrapper {
   height: 100vh;
   display: flex;
@@ -19,6 +23,10 @@ body {
   height: 100%;
   flex: 1;
   overflow: scroll;
+}
+
+#page-wrapper.printable {
+  overflow: visible;
 }
 
 #page-wrapper.printable>#editor {
@@ -33,6 +41,7 @@ body {
 
 #page-wrapper.printable>#preview {
   border-left: none;
+  overflow: visible;
 }
 
 .katex-block {
