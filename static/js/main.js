@@ -29,6 +29,7 @@ const editor = ace.edit('editor');
 editor.getSession().setUseSoftTabs(true);
 editor.getSession().setTabSize(2);
 editor.getSession().setUseWrapMode(true);
+editor.getSession().setMode("ace/mode/markdown");
 
 function updateOutput() {
   const result = marked(editor.getValue(), {
