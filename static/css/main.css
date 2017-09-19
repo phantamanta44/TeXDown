@@ -39,6 +39,10 @@ span.katex-display {
   text-align: left;
 }
 
+li {
+  margin: 8px 0;
+}
+
 html,
 body {
   color: black;
