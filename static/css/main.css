@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  overflow: hidden;
+}
+
 #page-wrapper {
   height: 100vh;
   display: flex;
