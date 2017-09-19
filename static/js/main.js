@@ -44,6 +44,7 @@ document.onkeydown = function(event) {
   if (event.keyCode === 77 && event.ctrlKey) {
     wrapper.classList.toggle('printable');
     document.body.classList.toggle('printable');
+    window.scrollTo(0, 0);
     event.preventDefault();
     return false;
   }
