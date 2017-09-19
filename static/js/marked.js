@@ -366,6 +366,7 @@ Lexer.prototype.token = function(src, top, bq) {
       this.tokens.push({
         type: 'list_end'
       });
+      b = null;
 
       continue;
     }
