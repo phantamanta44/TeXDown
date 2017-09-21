@@ -320,7 +320,7 @@ Lexer.prototype.token = function(src, top, bq) {
         // Outdent whatever the
         // list item contains. Hacky.
         if (~item.indexOf('\n ')) {
-          space -= item.length;
+          space -= item.length + 1;
           item = !this.options.pedantic
             ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
             : item.replace(/^ {1,4}/gm, '');
