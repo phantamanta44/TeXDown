@@ -1,2 +1,2 @@
 # Contributors #
-* **George Liu** - Contributed some styling suggestions.
+* @renenGE - Contributed some styling suggestions.
