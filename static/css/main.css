@@ -149,14 +149,20 @@ h6 {
 
 table {
   margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
   border-spacing: 0px;
   border-collapse: collapse;
 }
 
 table td,
 table th {
-  padding: 0;
+  padding: 0 10px;
   line-height: 33px;
+}
+
+td:not(:last-child), th:not(:last-child) {
+    border-right: solid 1px #ABABAB;
 }
 
 code {
