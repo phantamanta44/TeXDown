@@ -33,7 +33,7 @@ if (!!document.location.search) {
 
 const wrapper = document.getElementById('page-wrapper');
 const preview = document.getElementById('preview');
-let fileName = q.fileName || 'Untitled.md';
+let fileName = q.filename || 'Untitled.md';
 
 const editor = ace.edit('editor');
 editor.getSession().setUseSoftTabs(true);
@@ -68,14 +68,16 @@ document.onkeydown = function(event) {
         event.preventDefault();
         return false;
       case 83: // ctrl + s
-        const anchorElem = document.createElement('a');
+        alert('Not implemented yet!');
+        // TODO Implement this better
+        /*const anchorElem = document.createElement('a');
         const enc = encodeURIComponent(editor.getValue());
         anchorElem.setAttribute('href', `data:text/markdown;charset=utf-8,${enc}`);
         anchorElem.setAttribute('download', fileName);
         anchorElem.style.display = 'none';
         document.body.appendChild(anchorElem);
         anchorElem.click();
-        document.body.removeChild(anchorElem);
+        document.body.removeChild(anchorElem);*/
         event.preventDefault();
         return false;
     }
