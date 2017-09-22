@@ -47,6 +47,10 @@ body.printable {
   color: black;
 }
 
+.katex {
+  font-size: 12pt;
+}
+
 span.katex-display {
   margin: 0.4rem 0;
 }
