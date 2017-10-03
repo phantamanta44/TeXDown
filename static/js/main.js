@@ -40,9 +40,6 @@ editor.getSession().setUseSoftTabs(true);
 editor.getSession().setTabSize(2);
 editor.getSession().setUseWrapMode(true);
 editor.getSession().setMode("ace/mode/markdown");
-if (!!q.content) {
-  editor.getSession().setValue(decodeURIComponent(q.content));
-}
 
 let tmid = -1;
 function updateOutput() {
@@ -56,6 +53,11 @@ function updateOutput() {
     });
     preview.innerHTML = result;
   }, 500);
+}
+  
+if (!!q.content) {
+  editor.getSession().setValue(decodeURIComponent(q.content));
+  updateOutput();
 }
 
 editor.getSession().on('change', updateOutput);
