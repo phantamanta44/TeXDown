@@ -44,12 +44,18 @@ if (!!q.content) {
   editor.getSession().setValue(decodeURIComponent(q.content));
 }
 
+let tmid = -1;
 function updateOutput() {
-  const result = marked(editor.getValue(), {
-    renderer: renderer,
-    smartypants: true,
-  });
-  preview.innerHTML = result;
+  if (tmid !== -1) {
+    window.clearTimeout(tmid);
+  }
+  tmid = window.setTimeout(function() {
+    const result = marked(editor.getValue(), {
+      renderer: renderer,
+      smartypants: true,
+    });
+    preview.innerHTML = result;
+  }, 500);
 }
 
 editor.getSession().on('change', updateOutput);
