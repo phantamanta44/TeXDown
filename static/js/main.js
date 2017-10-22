@@ -3,9 +3,21 @@ const katexOpts = {
   throwOnError: false,
   errorColor: '#F44336',
 };
+
+const decodeEntities = (() => {
+  const elem = document.createElement('div');
+  return (str) => {
+    elem.innterHTML = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
+      .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+    str = elem.textContent;
+    elem.textContent = '';
+    return str;
+  };
+})();
+
 renderer.code = function(code) {
   try {
-    const r = katex.renderToString(code, {
+    const r = katex.renderToString(decodeEntities(code), {
       displayMode: true,
       ...katexOpts,
     });
@@ -16,7 +28,7 @@ renderer.code = function(code) {
 };
 renderer.codespan = function(code) {
   try {
-    return katex.renderToString(code, katexOpts);
+    return katex.renderToString(decodeEntities(code), katexOpts);
   } catch (e) {
     return e.message;
   }
