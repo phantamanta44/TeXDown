@@ -7,7 +7,7 @@ const katexOpts = {
 const decodeEntities = (() => {
   const elem = document.createElement('div');
   return (str) => {
-    elem.innterHTML = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
+    elem.innerHTML = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
       .replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
     str = elem.textContent;
     elem.textContent = '';
