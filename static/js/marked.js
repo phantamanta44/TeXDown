@@ -14,6 +14,7 @@ var block = {
   newline: /^\n+/,
   code: /^( {4}[^\n]+\n*)+/,
   fences: noop,
+  blocktex: /^ *\${2}(?:\s*\n)?([\S\s]+?)(?:\s*\n)?(?=\${2})\${2} *(?:\n+|$)/,
   hr: /^( *[-*_]){3,} *(?:\n+|$)/,
   heading: /^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,
   nptable: noop,
@@ -23,7 +24,7 @@ var block = {
   html: /^ *(?:comment *(?:\n|\s*$)|closed *(?:\n{2,}|\s*$)|closing *(?:\n{2,}|\s*$))/,
   def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,
   table: noop,
-  paragraph: /^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,
+  paragraph: /^((?:[^\n]+\n?(?!blocktex|hr|heading|lheading|blockquote|tag|def))+)\n*/,
   text: /^[^\n]+/
 };
 
@@ -56,6 +57,7 @@ block.html = replace(block.html)
   ();
 
 block.paragraph = replace(block.paragraph)
+  ('blocktex', block.blocktex)
   ('hr', block.hr)
   ('heading', block.heading)
   ('lheading', block.lheading)
@@ -160,6 +162,9 @@ Lexer.prototype.token = function(src, top, bq) {
     , l;
 
   while (src) {
+    if (this.tokens.length) {
+      console.log('parsed token: ', this.tokens[this.tokens.length - 1]);
+    }
     // newline
     if (cap = this.rules.newline.exec(src)) {
       src = src.substring(cap[0].length);
@@ -190,6 +195,16 @@ Lexer.prototype.token = function(src, top, bq) {
         type: 'code',
         lang: cap[2],
         text: cap[3] || ''
+      });
+      continue;
+    }
+
+    // block tex
+    if (cap = this.rules.blocktex.exec(src)) {
+      src = src.substring(cap[0].length);
+      this.tokens.push({
+        type: 'tex',
+        content: cap[1]
       });
       continue;
     }
@@ -457,6 +472,7 @@ Lexer.prototype.token = function(src, top, bq) {
         Error('Infinite loop on byte: ' + src.charCodeAt(0));
     }
   }
+  console.log('parsed token: ', this.tokens[this.tokens.length - 1]);
 
   return this.tokens;
 };
@@ -466,7 +482,7 @@ Lexer.prototype.token = function(src, top, bq) {
  */
 
 var inline = {
-  escape: /^\\([\\`*{}\[\]()#+\-.!_>])/,
+  escape: /^\\([\\$`*{}\[\]()#+\-.!_>])/,
   autolink: /^<([^ >]+(@|:\/)[^ >]+)>/,
   url: noop,
   tag: /^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,
@@ -475,10 +491,11 @@ var inline = {
   nolink: /^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,
   strong: /^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,
   em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+  linetex: /^\$\s*([\s\S]+?)\s*\$/,
   code: /^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
-  text: /^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/
+  text: /^[\s\S]+?(?=[\\<!\[_*`$]| {2,}\n|$)/
 };
 
 inline._inside = /(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;
@@ -680,6 +697,13 @@ InlineLexer.prototype.output = function(src) {
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.codespan(escape(cap[2], true));
+      continue;
+    }
+
+    // inline tex
+    if (cap = this.rules.linetex.exec(src)) {
+      src = src.substring(cap[0].length);
+      out += this.renderer.inlinemath(cap[1]);
       continue;
     }
 
@@ -1015,6 +1039,9 @@ Parser.prototype.tok = function() {
       return this.renderer.code(this.token.text,
         this.token.lang,
         this.token.escaped);
+    }
+    case 'tex': {
+      return this.renderer.blockmath(this.token.content);
     }
     case 'table': {
       var header = ''

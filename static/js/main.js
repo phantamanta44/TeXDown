@@ -15,7 +15,7 @@ const decodeEntities = (() => {
   };
 })();
 
-renderer.code = function(code) {
+renderer.blockmath = function(code) {
   try {
     const r = katex.renderToString(decodeEntities(code), {
       displayMode: true,
@@ -26,7 +26,7 @@ renderer.code = function(code) {
     return `<blockquote class="katex-block">${e.message}</blockquote>`;
   }
 };
-renderer.codespan = function(code) {
+renderer.inlinemath = function(code) {
   try {
     return katex.renderToString(decodeEntities(code), katexOpts);
   } catch (e) {

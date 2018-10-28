@@ -51,10 +51,17 @@ body.printable {
   font-size: 12pt;
 }
 
+span.katex .rule {
+  display: inline;
+}
+
 span.katex-display {
   margin: 0.4rem 0;
 }
 
+pre {
+  margin: 0.8rem 1.2rem;
+}
 
 /*! Typebase.less v0.1.0 | MIT License */
 
